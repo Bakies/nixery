@@ -2,7 +2,7 @@
 replicaCount: 1
 
 image:
-  repository: nixery
+  repository: bakies/nixery
   pullPolicy: IfNotPresent
   tag: "latest"
 
