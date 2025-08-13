@@ -1,0 +1,111 @@
+# Default values for nixery
+replicaCount: 1
+
+image:
+  repository: nixery
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  fsGroup: 1000
+
+securityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: false
+  runAsNonRoot: true
+  runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 8080
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: nixery.local
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+
+resources:
+  limits:
+    cpu: 1000m
+    memory: 2Gi
+  requests:
+    cpu: 100m
+    memory: 256Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+# Nixery configuration
+nixery:
+  # Storage backend: "gcs" or "filesystem"
+  storageBackend: "filesystem"
+  
+  # Port for Nixery to listen on
+  port: "8080"
+  
+  # Nix channel to use for building images
+  channel: "nixpkgs-unstable"
+  
+  # Timeout for Nix builds (in seconds)
+  nixTimeout: "300"
+  
+  # Filesystem storage configuration (when storageBackend is "filesystem")
+  filesystem:
+    storagePath: "/var/cache/nixery"
+    persistentVolume:
+      enabled: true
+      size: 50Gi
+      storageClass: ""
+      accessMode: ReadWriteOnce
+  
+  # GCS storage configuration (when storageBackend is "gcs")
+  gcs:
+    bucket: ""
+    # Service account key for GCS access (base64 encoded)
+    serviceAccountKey: ""
+    # Create secret from serviceAccountKey
+    createSecret: true
+  
+  # Optional: URL to popularity data
+  popularityUrl: ""
+  
+  # Optional: Custom package repository
+  pkgsRepo: ""
+  
+  # Optional: Local package path
+  pkgsPath: ""
+
+# Environment variables for the container
+env: []

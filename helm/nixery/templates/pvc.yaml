@@ -1,0 +1,17 @@
+{{- if and (eq .Values.nixery.storageBackend "filesystem") .Values.nixery.filesystem.persistentVolume.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "nixery.fullname" . }}-storage
+  labels:
+    {{- include "nixery.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - {{ .Values.nixery.filesystem.persistentVolume.accessMode }}
+  resources:
+    requests:
+      storage: {{ .Values.nixery.filesystem.persistentVolume.size }}
+  {{- if .Values.nixery.filesystem.persistentVolume.storageClass }}
+  storageClassName: {{ .Values.nixery.filesystem.persistentVolume.storageClass }}
+  {{- end }}
+{{- end }}

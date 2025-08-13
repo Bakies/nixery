@@ -1,0 +1,16 @@
+apiVersion: v2
+name: nixery
+description: A Helm chart for Nixery - Docker-compatible container registry using Nix
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+keywords:
+  - nix
+  - docker
+  - registry
+  - container
+home: https://nixery.dev
+sources:
+  - https://github.com/tazjin/nixery
+maintainers:
+  - name: nixery-maintainers
