@@ -68,6 +68,8 @@ RUN echo '#!/bin/bash' > /usr/local/bin/start-nixery.sh && \
     echo 'if [ ! -f /root/.nix-profile/etc/profile.d/nix.sh ]; then' >> /usr/local/bin/start-nixery.sh && \
     echo '  echo "Installing Nix..."' >> /usr/local/bin/start-nixery.sh && \
     echo '  export USER=root' >> /usr/local/bin/start-nixery.sh && \
+    echo '  # Ensure proper ownership of /nix directory' >> /usr/local/bin/start-nixery.sh && \
+    echo '  chown -R root:root /nix' >> /usr/local/bin/start-nixery.sh && \
     echo '  sh <(curl -L https://nixos.org/nix/install) --no-daemon --yes' >> /usr/local/bin/start-nixery.sh && \
     echo '  # Configure Nix' >> /usr/local/bin/start-nixery.sh && \
     echo '  mkdir -p /etc/nix' >> /usr/local/bin/start-nixery.sh && \
