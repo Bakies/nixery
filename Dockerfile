@@ -64,6 +64,10 @@ EXPOSE 8080
 RUN echo '#!/bin/bash' > /usr/local/bin/start-nixery.sh && \
     echo 'set -e' >> /usr/local/bin/start-nixery.sh && \
     echo '' >> /usr/local/bin/start-nixery.sh && \
+    echo '# Debug: Check current user and /nix permissions' >> /usr/local/bin/start-nixery.sh && \
+    echo 'echo "Current user: $(whoami) (UID: $(id -u))"' >> /usr/local/bin/start-nixery.sh && \
+    echo 'echo "/nix directory permissions: $(ls -ld /nix)"' >> /usr/local/bin/start-nixery.sh && \
+    echo '' >> /usr/local/bin/start-nixery.sh && \
     echo '# Install Nix if not already present' >> /usr/local/bin/start-nixery.sh && \
     echo 'if [ ! -f /root/.nix-profile/etc/profile.d/nix.sh ]; then' >> /usr/local/bin/start-nixery.sh && \
     echo '  echo "Installing Nix..."' >> /usr/local/bin/start-nixery.sh && \
